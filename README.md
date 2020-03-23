@@ -86,3 +86,7 @@ grep -v "*" Report_DSpl19-4025_SNP_2.csv | cut -d "," -f 2,3 | sort | uniq > seq
 
 Use the `line_extract.py` python script to extract only the outlier sequences you are interesting in.
 
+## Blast2go
+
+You can try to use Blast2GO to annotate your gene list with GO terms. 
+You can upload a xml file with your blast results and Blast2GO will perform GO annotations on your dataset.
