@@ -1,10 +1,10 @@
 # BLAST tutorial to define candidate genes 
 
-Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometimes be tricky, i.e. knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies.
+Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometimes be tricky. Indeed, knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies can be time consuming when ID names are different from vcf to fasta sequences files etc.
 
 ## Installing BLAST search tool on your computer
 
-To easily install NCBI BLAST tool, you can follow the nice tutorial done by (Eric Normendeau)[https://github.com/enormandeau/ncbi_blast_tutorial]
+To easily install NCBI BLAST tool, you can follow the nice tutorial done by (Eric Normandeau)[https://github.com/enormandeau/ncbi_blast_tutorial]
 
 ## RAD-sequencing libraries
 
@@ -13,12 +13,18 @@ To easily install NCBI BLAST tool, you can follow the nice tutorial done by (Eri
 When you finish to run STACKs, you will end up having a file named **populations.loci.fa** by specifying the `--fasta_loci option`. 
 This file contains the per-locus consensus FASTA output that you can easily use to perform BLAST alignment in NCBI. 
 
-### 2. Extracting the ID that you found were outliers
+### 2. Extracting the sequence ID that were found to be outliers
 
-You probably used one population-differntiated (PD) or Genotype-Environmental-association analysis (GEA) and you detected a list of putative outlier SNPs.
-First you want to extract the  outlier SNPs sequences from the file **populations.loci.fa**.
+You probably used one population-differentiated (PD) or Genotype-Environmental-Association (GEA) approach to detect a list of putative outlier SNPs.
+Here, I used PCAdapt program to detect a list of putative outlier SNPs (see files for each species named `number ofoutliers_pcadapt_speciesname`. 
+These SNPs are located on a sequence and then you first want to extract the  outlier SNPs sequences from the file **populations.loci.fa**.
 
-To do so you can transform the fasta file in a text file format to then use a script `line.extract.py` that you can find in (Eric Normandeau github page)[https://github.com/enormandeau/Scripts].
+To do so you can transform the fasta file in a text file format.
+```{r, engine = 'bash', eval = FALSE}
+grep -v '^>' fastafile >newfile
+```
+
+From this new file you can now use a script `line.extract.py` (that you can find in (Eric Normandeau github page)[https://github.com/enormandeau/Scripts] to obtain a sequence for each outlier SNP.
 
 When you have finished to extract the outlier sequences from the text file, you can then perform a BLAST on this subset of sequences.
 
