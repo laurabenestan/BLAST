@@ -1,6 +1,6 @@
 # BLAST tutorial on RAD-seq datasets
 
-Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometimes be tricky, i.e. knowning which file contauins the sequence and ID information for RAD-seq and Dartseq librairies.
+Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometimes be tricky, i.e. knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies.
 
 ## Installing BLAST search tool on your computer
 
@@ -22,17 +22,23 @@ To do so you can transform the fasta file in a text file format to then use a sc
 
 When you have finished to extract the outlier sequences from the text file, you can then perform a BLAST on this subset of sequences.
 
-### 3. BLAST search on outlier sequences
+### 3. Download sequences database
 
 You need to download the NCBI database, to do so run:
 ```{r, engine = 'bash', eval = FALSE}
 update_blastdb.pl --decompress nr [*]
 ```
 
-After downloading this database, youi need to convert it in the right format by using the ``makeblastdb`` tool.
+After downloading this database, you need to convert it in the right format by using the ``makeblastdb`` tool.
 ```{r, engine = 'bash', eval = FALSE}
 makeblastdb -in reference.fasta -title reference -dbtype nucl -out databases/reference
 ```
+
+You can do the same with the [SWISSPROT database](https://www.uniprot.org/uniprot/?query=reviewed:yes)
+
+https://www.uniprot.org/uniprot/?query=reviewed:yes
+
+### 4. BLAST search on outlier sequences
 
 You can now run the blast using your dataset containing outlier SNPs sequences (sequences.fasta) on the NCBI database.
 ```{r, engine = 'bash', eval = FALSE}
