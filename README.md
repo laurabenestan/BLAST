@@ -24,7 +24,7 @@ When you have finished to extract the outlier sequences from the text file, you 
 
 ### 3. Download sequences database
 
-You need to download the NCBI database, to do so run:
+Forst you can download the NCBI database, which contains all the sequences avaimable worldwide, to do so run:
 ```{r, engine = 'bash', eval = FALSE}
 update_blastdb.pl --decompress nr [*]
 ```
@@ -34,13 +34,11 @@ After downloading this database, you need to convert it in the right format by u
 makeblastdb -in reference.fasta -title reference -dbtype nucl -out databases/reference
 ```
 
-You can do the same with the [SWISSPROT database](https://www.uniprot.org/uniprot/?query=reviewed:yes)
-
-https://www.uniprot.org/uniprot/?query=reviewed:yes
+You can do the same with the [SWISSPROT database](https://www.uniprot.org/uniprot/?query=reviewed:yes). The SWISSPROT database contains only the collection of functional information on proteins, with accurate, consistent and rich annotation. 
 
 ### 4. BLAST search on outlier sequences
 
-You can now run the blast using your dataset containing outlier SNPs sequences (sequences.fasta) on the NCBI database.
+You can now run the blast command using your dataset containing outlier SNPs sequences (sequences.fasta) on the NCBI database.
 ```{r, engine = 'bash', eval = FALSE}
 blastn -db databases/reference -query sequences.fasta -evalue 1e-3 -word_size 11 -outfmt 0 > sequences.reference
 ```
