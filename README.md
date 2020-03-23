@@ -1,4 +1,4 @@
-# BLAST tutorial on RAD-seq datasets
+# BLAST tutorial to define candidate genes 
 
 Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometimes be tricky, i.e. knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies.
 
@@ -68,3 +68,15 @@ To have a vcf file that works, you can simply copy paste the beginning of your p
 ```{r, engine = 'bash', eval = FALSE}
 nano test2.vcf
 ```
+
+### 2. Find the informations containing the sequences and the name of each sequence in the file sent by the DarT company
+
+In the .csv file gave by DarT company, there is a list of sequences (3rd column) and their ID names (2nd column). 
+```{r, engine = 'bash', eval = FALSE}
+grep -v "*" Report_DSpl19-4025_SNP_2.csv | cut -d "," -f 2,3 | sort | uniq > sequences_palinurus.txt
+```
+
+### 3. Extract the outlier SNPs in this file containing sequences
+
+Use the `line_extract.py` python script to extract only the outlier sequences you are interesting in.
+
