@@ -43,6 +43,28 @@ You can now run the blast command using your dataset containing outlier SNPs seq
 blastn -db databases/reference -query sequences.fasta -evalue 1e-3 -word_size 11 -outfmt 0 > sequences.reference
 ```
 
+## DarTseq libraries
 
+DartSeq is a genotyping-by-sequencing system that sequence the most informative representations of genomic DNA samples to help marker discovery. 
 
+### 1. Change the ID name in the vcf file
 
+Create a file saving the beginning of the ID number, i.e. remove the "|F|...." from the ID names.
+```{r, engine = 'bash', eval = FALSE}
+grep -v -E "#" 64057snps_468ind.recode.vcf | cut -f 3 | sed 's/|.*//g' > id_easy_serran.txt
+```
+
+Remove the beginning, i.e. "#" of the vcf file
+```{r, engine = 'bash', eval = FALSE}
+grev -v -E "#" 64057snps_468ind.recode.vcf > test.vcf
+```
+
+Copy the ID names saved in the file id_easy_serran.txt in the new vcf file.
+```{r, engine = 'bash', eval = FALSE}
+awk 'NR==FNR{a[NR]=$0;next} {$3=a[FNR]}1' OFS="\t" id_easy_serran.txt test.vcf > test2.vcf
+```
+
+To have a vcf file that works, you can simply copy paste the beginning of your previous vcf file in h terminal by typing
+```{r, engine = 'bash', eval = FALSE}
+nano test2.vcf
+```
