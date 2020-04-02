@@ -4,7 +4,7 @@ Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometim
 
 ## Installing BLAST search tool on your computer
 
-To easily install NCBI BLAST tool, you can follow the nice tutorial done by (Eric Normandeau)[https://github.com/enormandeau/ncbi_blast_tutorial]
+To easily install NCBI BLAST tool, you can follow the nice tutorial done by [Eric Normandeau](https://github.com/enormandeau/ncbi_blast_tutorial)
 
 ## RAD-sequencing libraries
 
