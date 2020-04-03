@@ -30,4 +30,4 @@ GFF3="/media/superdisk/reservebenefit/working/annotation/SCABv1_annotation.gff3"
 
 
 ## convert into bed
-awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > selected_loci_"$SPECIES".bed
+awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > processing/selected_loci_"$SPECIES".bed
