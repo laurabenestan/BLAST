@@ -32,7 +32,6 @@ GFF3="/media/superdisk/reservebenefit/working/annotation/SCABv1_annotation.gff3"
 ## select exon only
 EXOME="exome/"$SPECIES"_exon.gff3"
 awk '{ if($3 =="exon") { print $0 } }' $GFF3 > $EXOME
-
 ## convert into bed
 awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > processing/"$SPECIES"_selected_loci.bed
 ## get coding region for SNPs
