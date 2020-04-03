@@ -62,8 +62,8 @@ NumberOfFlankingBases=args.NumberOfFlankingBases
 
 
 #NumberOfFlankingBases=42
-#inputFastaFileGenome="genomes/sar_genome_lgt6000.fasta"
-#inputTableFile="diplodus_coding.snps.bed"
+#inputFastaFileGenome="/media/superdisk/reservebenefit/donnees/genomes/sar_genome_lgt6000.fasta"
+#inputTableFile="processing/diplodus_coding.snps.bed"
 
 
 
@@ -72,11 +72,12 @@ genome = pysam.FastaFile(inputFastaFileGenome)
 
 
 
-
 ## colomn are :
 ## scaffold, coordinates SNP L, coordinates SNP R, scaffold, soft, type, coordinates scaffold L, coordinates scaffold R, match, brand, ., annotations
 
 ## read table
+csv_reader = csv.reader(open(inputTableFile), delimiter='\t')
+
 with open(inputTableFile) as inputTable:
     csv_reader = csv.reader(inputTable, delimiter='\t')
     for row in csv_reader:
@@ -84,17 +85,6 @@ with open(inputTableFile) as inputTable:
         positionSNP=int(row[1])
         scaffoldPosLeft=int(row[6])
         scaffoldPosRight=int(row[7])
-        positionLeft=positionSNP-1-NumberOfFlankingBases
-        if positionLeft < 1:
-            positionLeft=1
-        positionRight=positionSNP-1+NumberOfFlankingBases
-        flankingSeq = genome.fetch(scaffold, positionLeft,positionRight)
-        rawAnnotations=row[-1]
-        splitAnnotations=rawAnnotations.split(";")
-        GO="NA"
-        for i in splitAnnotations:
-            if "GO:" in i:
-                GO=i.split("=")[1]
-                break;
-        if GO != "NA":
-            print("%s;%s;%s;%s" % (scaffold, positionSNP,GO,flankingSeq))
+        typeSeq = row[5]  
+        sequences = genome.fetch(scaffold, scaffoldPosLeft,scaffoldPosRight)
+        print("%s;%s;%s;%s" % (scaffold, positionSNP, typeSeq, sequences))
