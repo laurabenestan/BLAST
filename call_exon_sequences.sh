@@ -38,4 +38,4 @@ awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > processing/"$SPECIES"_selected_loci
 ## get coding region for SNPs
 bedtools intersect -wb -a processing/"$SPECIES"_selected_loci.bed -b "$EXOME" > processing/"$SPECIES"_coding.snps.bed
 ## format annotation table (get genome sequences with 99*2 flanking region)
-python3 flanking_sequence.py -g "$GENOME_FASTA" -t "$SPECIES"_coding.snps.bed -f 99 > "$SPECIES"_coding.format.snps.csv
+python3 flanking_sequence.py -g "$GENOME_FASTA" -t processing/"$SPECIES"_coding.snps.bed -f 99 > "$SPECIES"_coding.format.snps.csv
