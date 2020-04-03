@@ -29,5 +29,11 @@ SPECIES="serran"
 GFF3="/media/superdisk/reservebenefit/working/annotation/SCABv1_annotation.gff3"
 
 
+## select exon only
+EXOME="exome/"$SPECIES"_exon.gff3"
+awk '{ if($3 =="exon" && $6 < 0.7) { print $0 } }' $GFF3 > $EXOME
+
 ## convert into bed
-awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > processing/selected_loci_"$SPECIES".bed
+awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > processing/"$SPECIES"_selected_loci.bed
+## get coding region for SNPs
+bedtools intersect -wb -a processing/selected_loci_"$SPECIES".bed -b "$EXOME" > processing/"$SPECIES"_coding.snps.bed
