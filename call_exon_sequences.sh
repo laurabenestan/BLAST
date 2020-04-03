@@ -14,12 +14,12 @@ singularity shell --bind /media/superdisk:/media/superdisk $SINGULARITY_SIMG
 ## global variables
 ### diplodus
 GENOME_FASTA="/media/superdisk/reservebenefit/donnees/genomes/sar_genome_lgt6000.fasta"
-OUTLIERS="data/367outliers_pcadapt_mullus.tsv"
+OUTLIERS="data/476outliers_pcadapt_diplodus.tsv"
 SPECIES="diplodus"
 GFF3="/media/superdisk/reservebenefit/working/annotation/DSARv1_annotation.gff3"
 ### mullus
 GENOME_FASTA="/media/superdisk/reservebenefit/donnees/genomes/mullus_genome_lgt6000.fasta"
-OUTLIERS="data/476outliers_pcadapt_diplodus.tsv"
+OUTLIERS="data/367outliers_pcadapt_mullus.tsv"
 SPECIES="mullus"
 GFF3="/media/superdisk/reservebenefit/working/annotation/MSURv1_annotation.gff3"
 ### serran
@@ -31,9 +31,11 @@ GFF3="/media/superdisk/reservebenefit/working/annotation/SCABv1_annotation.gff3"
 
 ## select exon only
 EXOME="exome/"$SPECIES"_exon.gff3"
-awk '{ if($3 =="exon" && $6 < 0.7) { print $0 } }' $GFF3 > $EXOME
+awk '{ if($3 =="exon") { print $0 } }' $GFF3 > $EXOME
 
 ## convert into bed
 awk '{ print $1"\t"$2"\t"$2+1 }' $OUTLIERS > processing/"$SPECIES"_selected_loci.bed
 ## get coding region for SNPs
-bedtools intersect -wb -a processing/selected_loci_"$SPECIES".bed -b "$EXOME" > processing/"$SPECIES"_coding.snps.bed
+bedtools intersect -wb -a processing/"$SPECIES"_selected_loci.bed -b "$EXOME" > processing/"$SPECIES"_coding.snps.bed
+## format annotation table (get genome sequences with 99*2 flanking region)
+python3 flanking_sequence.py -g "$GENOME_FASTA" -t "$SPECIES"_coding.snps.bed -f 99 > "$SPECIES"_coding.format.snps.csv
