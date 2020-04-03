@@ -1,5 +1,7 @@
 # BLAST tutorial to define candidate genes 
 
+Pierre-Edouard GUERIN & Laura BENESTAN
+
 Performing an efficient BLAST on RAD-sequencing and DarTseq datasets may sometimes be tricky. Indeed, knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies can be time consuming when ID names are different from vcf to fasta sequences files etc.
 
 ## Installing BLAST search tool on your computer
