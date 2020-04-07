@@ -17,7 +17,7 @@ To avoid such difficulties in the analysis, we create this "BLAST" pipeline.
 ### Install BLAST
 To easily install NCBI BLAST tool, you can follow the nice tutorial done by [Eric Normandeau](https://github.com/enormandeau/ncbi_blast_tutorial)
 
-First you can download the NCBI database, which contains all the sequences avaimable worldwide, to do so run:
+First you can download the NCBI database, which contains all the sequences available worldwide, to do so run:
 ```{r, engine = 'bash', eval = FALSE}
 update_blastdb.pl --decompress nr [*]
 ```
@@ -70,18 +70,22 @@ grep -v -E "#" 64057snps_468ind.recode.vcf | cut -f 3 | sed 's/|.*//g' > id_easy
 
 Remove the beginning, i.e. "#" of the vcf file
 ```{r, engine = 'bash', eval = FALSE}
-grev -v -E "#" 64057snps_468ind.recode.vcf > test.vcf
+grep -v -E "#" 64057snps_468ind.recode.vcf > test.vcf
 ```
 
 Copy the ID names saved in the file id_easy_serran.txt in the new vcf file.
 ```{r, engine = 'bash', eval = FALSE}
 awk 'NR==FNR{a[NR]=$0;next} {$3=a[FNR]}1' OFS="\t" id_easy_serran.txt test.vcf > test2.vcf
 ```
+cat header.vcf test2.vcf > test3.vcf
 
 To have a vcf file that works, you can simply copy paste the beginning of your previous vcf file in h terminal by typing
 ```{r, engine = 'bash', eval = FALSE}
 nano test2.vcf
 ```
+
+### From sequences prepare fasta format
+cut -d ";" -f 2,4 diplodus.snps.csv | awk '{ printf ">%s\n%s\n",$1,$2 }' | tr ';' '\n' > diplodus_outliers.fasta
 
 ### 2. Find the informations containing the sequences and the name of each sequence in the file sent by the DarT company
 
