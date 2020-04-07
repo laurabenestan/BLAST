@@ -11,7 +11,7 @@ Performing an efficient Basic Local Alignment Search Tool (BLAST) on RAD-sequenc
 Indeed, knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies is not so obvious, particularly in the case you end up discovering that the fasta sequences identification names are different from those of the vcf files, and so on.
 
 To avoid such difficulties, we create this "BLAST" pipeline, see the flow chart below.
-[BLAST flow chart](BLAST.png)
+![BLAST flow chart](BLAST.png)
 
 ## Step 0. Prepare your computer
 
