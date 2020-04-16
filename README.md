@@ -6,6 +6,7 @@ Montpellier 03-April 2020
 
 _______________________________________________________________________________
 
+
 Performing an efficient **Basic Local Alignment Search Tool (BLAST)** on RAD-sequencing and DarTseq datasets may sometimes be tricky. Before using this ubiquitous tool (BLAST), several steps are required that goes from outlier detection to **identifying candidate genes**. 
 
 Indeed, knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies is not so obvious, particularly in the case you end up discovering that the fasta sequences identification names are different from those of the vcf files, and so on.
@@ -14,6 +15,7 @@ To avoid such difficulties, we create this "BLAST" pipeline, see the flow chart 
 ![BLAST flow chart](BLAST.png)
 
 _______________________________________________________________________________
+
 
 ## Step 0. Prepare your computer
 
@@ -35,13 +37,15 @@ You can do the same with the [SWISSPROT database](https://www.uniprot.org/unipro
 The SWISSPROT database contains the collection of functional information on proteins, with accurate, consistent and rich annotation. 
 This database concerns mostly model species where such annotation is available and then is restricted less than 600,000 proteins/genes.
 
+
 _______________________________________________________________________________
+
 
 ## Step 1. Create your query sequences from outlier detection list of SNPs
 
 BLAST looks for matching query sequences, here the sequences where on outlier has been found, and a database (e.g. NCBI).
 
-In our case we have two sets of query sequences per species:
+In our case we have **two sets of query sequences** per species:
 - a large set : all the sequences of genes that were genotyped on individuals using RAD-seq libraries
 - a small set : only the sequences containing the potential outlier SNPs
 The idea is to compare these two sets of sequences at the end for the enrichment analyses if there is enough genes identified as potential candidate.
@@ -108,6 +112,9 @@ Extract the ID number found to be putative outliers from the file sequences_pali
 awk '{ printf ">%s\n%s\n",$1,$2 }' sequencesoutliers_palinurus.txt | tr ';' '\n' > diplodus_outliers.fasta
 ```
 
+_______________________________________________________________________________
+
+
 ## Step 2. BLAST your query outlier sequences to your transcriptome or genome to get longer DNA fragments
 
 In this step, the two main goals here are:
@@ -120,8 +127,10 @@ Because in larger subject sets some good matches are likely to be found by chanc
 
 For example, an E value of 0.05 means that we can expect a match by chance in 1 in 20 similar searches, whereas an E value of 2.0 means we can expect 2 matches by chance for each similar search.
 
+_______________________________________________________________________________
 
-## 3. BLAST on existing database available online
+
+## Step 3. BLAST on existing database available online
 
 When you have finished to get longer outlier sequences from yoru transcriptome/genome, you can now run the blast command using your dataset containing outlier SNPs sequences (sequences.fasta) on the NCBI database.
 
@@ -129,7 +138,10 @@ When you have finished to get longer outlier sequences from yoru transcriptome/g
 blastn -db databases/reference -query sequences.fasta -evalue 1e-3 -word_size 11 -outfmt 0 > sequences.reference
 ```
 
-## 4. METABOLIC PATHWAY
+_______________________________________________________________________________
+
+
+## Step 4. Identifying the METABOLIC PATHWAY
 
 GO terms highly depends on the database used to perform the BLAST. 
 Then, using several databases such as those available in KEGGS may be of interest to not make any too rqpid conclusion qbout the categorical GO terms found.
