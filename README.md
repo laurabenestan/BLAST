@@ -6,12 +6,14 @@ Montpellier 03-April 2020
 
 _______________________________________________________________________________
 
-Performing an efficient Basic Local Alignment Search Tool (BLAST) on RAD-sequencing and DarTseq datasets may sometimes be tricky. Before using this ubiquitous tool (BLAST), several steps are required that goes from outlier detection to identifying gene candidates. 
+Performing an efficient **Basic Local Alignment Search Tool (BLAST)** on RAD-sequencing and DarTseq datasets may sometimes be tricky. Before using this ubiquitous tool (BLAST), several steps are required that goes from outlier detection to **identifying candidate genes**. 
 
 Indeed, knowning which file contains the sequence and ID information for RAD-seq and Dartseq librairies is not so obvious, particularly in the case you end up discovering that the fasta sequences identification names are different from those of the vcf files, and so on.
 
 To avoid such difficulties, we create this "BLAST" pipeline, see the flow chart below.
 ![BLAST flow chart](BLAST.png)
+
+_______________________________________________________________________________
 
 ## Step 0. Prepare your computer
 
@@ -33,6 +35,8 @@ You can do the same with the [SWISSPROT database](https://www.uniprot.org/unipro
 The SWISSPROT database contains the collection of functional information on proteins, with accurate, consistent and rich annotation. 
 This database concerns mostly model species where such annotation is available and then is restricted less than 600,000 proteins/genes.
 
+_______________________________________________________________________________
+
 ## Step 1. Create your query sequences from outlier detection list of SNPs
 
 BLAST looks for matching query sequences, here the sequences where on outlier has been found, and a database (e.g. NCBI).
@@ -42,7 +46,7 @@ In our case we have two sets of query sequences per species:
 - a small set : only the sequences containing the potential outlier SNPs
 The idea is to compare these two sets of sequences at the end for the enrichment analyses if there is enough genes identified as potential candidate.
 
----- **Step 1' - RAD-seq library** ---------------------------------------------------
+---- **Step 1' - RAD-seq library** ------------------------------------------------
 
 ### Retrieving the files indicating the raw sequences (fasta) and the ID (name of the loci) from RAD-seq libraries
 
@@ -51,7 +55,7 @@ This file contains the per-locus consensus FASTA output that you can easily use 
 
 ### Extracting the sequence ID that were found to be outliers
 
-You probably used one population-differentiated (PD) or Genotype-Environmental-Association (GEA) approach to detect a list of putative outlier SNPs.
+You probably used one **population-differentiated (PD)** or **Genotype-Environmental-Association (GEA)** approach to detect a list of putative outlier SNPs.
 
 Here, I used PCAdapt program to detect a list of putative outlier SNPs (see files for each species named `number ofoutliers_pcadapt_speciesname`. 
 
