@@ -149,11 +149,12 @@ blastn -db databases/reference -query sequences.fasta -evalue 1e-3 -word_size 11
 
 BLAST has a large number of options :
 
-`-db`: the name (or path) of the database previously formatted using `makeblastdb` to search in as subject sequences. The database here is composed of 7 files with the following extensions: ndb, nhr, nin, not, nsq, ntf and nto.
-`-query`: the name (or path) of the FASTA-formatted file to search for as query sequences.
-`-evalue`: E-values smaller than 0.001 or -evalue 1e-6 should be reported (see previous comments on Evalues above).
-`-query`: the name (or path) of the FASTA-formatted file to search for as query sequences.
-`-word_size`:
+* `-db`: the name (or path) of the database previously formatted using `makeblastdb` to search in as subject sequences. The database here is composed of 7 files with the following extensions: ndb, nhr, nin, not, nsq, ntf and nto.
+* `-query`: the name (or path) of the FASTA-formatted file to search for as query sequences.
+* `-evalue`: E-values smaller than 0.001 or -evalue 1e-6 should be reported (see previous comments on Evalues above).
+* `-query`: the name (or path) of the FASTA-formatted file to search for as query sequences.
+* `-word_size`: length of an exact sequence match, as start region for the final alignment. Changing the initial word-size can help to find more, but less accurate hits; or to limit the results to almost perfect hits. For short sequences, word-size must be less than half the query length, otherwise reliable hits can be missed.
+* `-outfmt`: how to format the output. The default, 0, provides a human-readable (but not programmatically parseable) text file. The values 6 and 7 produce tab-separated rows and columns in a text file, with 7 providing explanatory comment lines. Similarly, a value of 10 produces comma-separated output; 11 produces a format that can later be quickly turned into any other with another program called blast_formatter. 
 
 _______________________________________________________________________________
 
