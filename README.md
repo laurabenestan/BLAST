@@ -22,20 +22,28 @@ _______________________________________________________________________________
 ### Install BLAST
 To easily install NCBI BLAST tool, you can follow the nice tutorial done by [Eric Normandeau](https://github.com/enormandeau/ncbi_blast_tutorial)
 
-First you can download the NCBI database, which contains all the sequences available worldwide, to do so run:
+First you can download the NCBI database, which contains all the fasta sequences available worldwide, to do so run:
 ```{r, engine = 'bash', eval = FALSE}
 update_blastdb.pl --decompress nr [*]
 ```
 
 ### Download databases
-After downloading this database, you need to convert it in the right format by using the ``makeblastdb`` tool.
+
+BLAST search can be run on simple FASTA files Yet, from a computational perspective, simple FASTA files are not easily searched. 
+The tool called `makeblastdb` thus converts a subject FASTA file into an indexed and quickly searchable version of the same information, stored in a set of similarly named files (often at least three ending in .nin, .nsq, and .nhr for nucleotide sequences). 
+
+This set of files represents the “database,” and the database name is the shared file name prefix of these files.
+
+To convert your FASTA-formatted sequences in the right format run the following command that uses ``makeblastdb`` tool.
+
 ```{r, engine = 'bash', eval = FALSE}
 makeblastdb -in reference.fasta -title reference -dbtype nucl -out databases/reference
 ```
 
 You can do the same with the [SWISSPROT database](https://www.uniprot.org/uniprot/?query=reviewed:yes). 
+
 The SWISSPROT database contains the collection of functional information on proteins, with accurate, consistent and rich annotation. 
-This database concerns mostly model species where such annotation is available and then is restricted less than 600,000 proteins/genes.
+This database concerns mostly model species where such annotation is available and then is restricted less than 561,910 proteins/genes.
 
 
 _______________________________________________________________________________
@@ -118,12 +126,13 @@ _______________________________________________________________________________
 ## Step 2. BLAST your query outlier sequences to your transcriptome or genome to get longer DNA fragments
 
 In this step, the two main goals here are:
-- to keep only coding DNA fragments as we are looking for candidate genes
-- to match the query outliers sequences to larger sequences of the genome or the transcriptome to potimize the BLAST search
+- to **keep only coding DNA fragments** as we are looking for candidate genes
+- to match the query outliers sequences to larger sequences of the genome or the transcriptome to optimize the BLAST search
 
 Indeed, a query sequence is said to hit a target sequence if they share a certain percent of similairty (number of nucleotide having the same position along the fragment), determined by a particular set of rules (e.g. allowing gaps or not). 
 
-Because in larger subject sets some good matches are likely to be found by chance, the BLAST search is associated with a “E value,” representing the expected number of matches one might find by chance in a subject set of that size with that score or better. To learn more about the BLAST search tool, see teh great tutorial done by [Oregon University](https://open.oregonstate.education/computationalbiology/chapter/command-line-blast/)
+Because in larger subject sets some good matches are likely to be found by chance, the BLAST search is associated with a **E-value**, representing the expected number of matches one might find by chance in a subject set of that size with that score or better.
+To learn more about the BLAST search tool, see the great tutorial done by [Oregon University](https://open.oregonstate.education/computationalbiology/chapter/command-line-blast/)
 
 For example, an E value of 0.05 means that we can expect a match by chance in 1 in 20 similar searches, whereas an E value of 2.0 means we can expect 2 matches by chance for each similar search.
 
@@ -132,11 +141,19 @@ _______________________________________________________________________________
 
 ## Step 3. BLAST on existing database available online
 
-When you have finished to get longer outlier sequences from yoru transcriptome/genome, you can now run the blast command using your dataset containing outlier SNPs sequences (sequences.fasta) on the NCBI database.
+When you have finished to get longer outlier sequences from youra transcriptome/genome, you can now run the blast command using your dataset containing outlier SNPs sequences (sequences.fasta) on the NCBI database.
 
 ```{r, engine = 'bash', eval = FALSE}
 blastn -db databases/reference -query sequences.fasta -evalue 1e-3 -word_size 11 -outfmt 0 > sequences.reference
 ```
+
+BLAST has a large number of options :
+
+`-db`: the name (or path) of the database previously formatted using `makeblastdb` to search in as subject sequences. The database here is composed of 7 files with the following extensions: ndb, nhr, nin, not, nsq, ntf and nto.
+`-query`: the name (or path) of the FASTA-formatted file to search for as query sequences.
+`-evalue`: E-values smaller than 0.001 or -evalue 1e-6 should be reported (see previous comments on Evalues above).
+`-query`: the name (or path) of the FASTA-formatted file to search for as query sequences.
+`-word_size`:
 
 _______________________________________________________________________________
 
