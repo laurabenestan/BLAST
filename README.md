@@ -1,5 +1,7 @@
 # Codes for the identifying candidate genes in a Next Generation Sequencing (NGS) dataset
 
+[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/3566)
+
 #### Laura Benestan, Pierre-Edouard Guérin
 
 Montpellier 03-April 2020
@@ -18,6 +20,22 @@ _______________________________________________________________________________
 
 
 ## Step 0. Prepare your computer
+
+### Singularity container
+
+#### Download the container
+
+A container with bedtools, sra-toolkits, vcftools
+
+```
+singularity pull --name snpsdata_analysis.simg shub://Grelot/reserveBenefit--snpsdata_analysis:snpsdata_analysis
+```
+
+#### Run the container
+
+```
+singularity run snpsdata_analysis.simg
+```
 
 ### Install BLAST
 To easily install NCBI BLAST tool, you can follow the nice tutorial done by [Eric Normandeau](https://github.com/enormandeau/ncbi_blast_tutorial)
