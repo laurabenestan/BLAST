@@ -135,7 +135,7 @@ Extract the ID number found to be putative outliers from the file sequences_pali
 
 ### From sequences prepare fasta format
 ```{r, engine = 'bash', eval = FALSE}
-awk '{ printf ">%s\n%s\n",$1,$2 }' sequencesoutliers_palinurus.txt | tr ';' '\n' > diplodus_outliers.fasta
+awk '{ printf ">%s\n%s\n",$1,$2 }' sequencesoutliers_palinurus.txt | tr ';' '\n' > palinurus_outliers.fasta
 ```
 
 _______________________________________________________________________________
