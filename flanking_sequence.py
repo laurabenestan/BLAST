@@ -74,7 +74,7 @@ for row in gff_reader:
     annot=row[-1]
     if "Ontology_term" in annot:
         for an in annot.split(";"):
-            if "Parent" in an:
+            if "ID" in an:
                 parent=an.split('=')[1]
             elif "Ontology" in an:
                 go=an.split('=')[1]
