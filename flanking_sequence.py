@@ -25,15 +25,12 @@ import subprocess
 import argparse
 import os.path
 import random
-
-
 import pysam
 import csv
 
 #================================================================================
 #CLASS
 #================================================================================
-
 
 
 #================================================================================
@@ -65,6 +62,27 @@ NumberOfFlankingBases=args.NumberOfFlankingBases
 #inputFastaFileGenome="/media/superdisk/reservebenefit/donnees/genomes/sar_genome_lgt6000.fasta"
 #inputTableFile="processing/diplodus_coding.snps.bed"
 
+inputGff3="/media/superdisk/reservebenefit/working/annotation/DSARv1_annotation.gff3"
+
+
+## read gff3 and get GO and parents ID as dictionary
+goDic = {}
+gff_reader = csv.reader(open(inputGff3), delimiter='\t')
+for row in gff_reader:
+    annot=row[-1]
+    if "Ontology_term" in annot:
+        for an in annot.split(";"):
+            if "Parent" in an:
+                parent=an.split('=')[1]
+            elif "Ontology" in an:
+                go=an.split('=')[1]
+                if ',' in go:
+                    go=go.split(',')[0]
+            else:
+                pass
+            #print("%s;%s" % (parent, go))
+            goDic[parent]=go
+
 
 
 ## open fasta file
@@ -77,14 +95,17 @@ genome = pysam.FastaFile(inputFastaFileGenome)
 
 ## read table
 csv_reader = csv.reader(open(inputTableFile), delimiter='\t')
-
-with open(inputTableFile) as inputTable:
-    csv_reader = csv.reader(inputTable, delimiter='\t')
-    for row in csv_reader:
-        scaffold=row[0]
-        positionSNP=int(row[1])
-        scaffoldPosLeft=int(row[6])
-        scaffoldPosRight=int(row[7])
-        typeSeq = row[5]  
-        sequences = genome.fetch(scaffold, scaffoldPosLeft,scaffoldPosRight)
-        print("%s;%s;%s;%s" % (scaffold, positionSNP, typeSeq, sequences))
+for row in csv_reader:
+    parent=row[-1].split(';')[1]
+    if "Parent" in parent:
+        parentId = parent.split('=')[1]
+        go = goDic.get(parentId,"NA")
+    else:
+        go = "NA"
+    scaffold=row[0]
+    positionSNP=int(row[1])
+    scaffoldPosLeft=int(row[6])
+    scaffoldPosRight=int(row[7])
+    typeSeq = row[5]  
+    sequences = genome.fetch(scaffold, scaffoldPosLeft,scaffoldPosRight)
+    print("%s;%s;%s;%s;%s" % (scaffold, positionSNP, typeSeq, sequences,go))
