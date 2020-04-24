@@ -83,7 +83,7 @@ for row in gff_reader:
             else:
                 pass
             #print("%s;%s" % (parent, go))
-            goDic[parent]=go
+        goDic[parent]=go
 
 
 
