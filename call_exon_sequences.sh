@@ -30,7 +30,7 @@ snp_exon_sequences () {
   bedtools intersect -wb -a $OUTBED -b $EXOME > $CODINGBED
   ## format annotation table (get genome sequences with 99*2 flanking region)
   SNPSCSV=sequences/"${OUTLIERS/.tsv/.snps.csv}"
-  python3 flanking_sequence.py -g $GENOME_FASTA -t $CODINGBED -f 99 > $SNPSCSV
+  python3 flanking_sequence.py -g $GENOME_FASTA -t $CODINGBED -a $GFF3 -f 99 > $SNPSCSV
 }
 
 
