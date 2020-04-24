@@ -47,6 +47,8 @@ parser.add_argument("-o","--output", type=str)
 parser.add_argument("-g","--inGenomeFasta",type=str)
 parser.add_argument("-t","--inTableFile",type=str)
 parser.add_argument("-f","--NumberOfFlankingBases",type=int)
+parser.add_argument("-a","--inGff3",type=str)
+
 
 #================================================================================
 #MAIN
@@ -56,13 +58,13 @@ resultsPath = args.output
 inputFastaFileGenome = args.inGenomeFasta
 inputTableFile=args.inTableFile
 NumberOfFlankingBases=args.NumberOfFlankingBases
-
+inputGff3=args.inGff3
 
 #NumberOfFlankingBases=42
 #inputFastaFileGenome="/media/superdisk/reservebenefit/donnees/genomes/sar_genome_lgt6000.fasta"
 #inputTableFile="processing/diplodus_coding.snps.bed"
 
-inputGff3="/media/superdisk/reservebenefit/working/annotation/DSARv1_annotation.gff3"
+#inputGff3="/media/superdisk/reservebenefit/working/annotation/DSARv1_annotation.gff3"
 
 
 ## read gff3 and get GO and parents ID as dictionary
