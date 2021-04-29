@@ -95,6 +95,10 @@ To do so you can transform the fasta file in a text file format.
 ```{r, engine = 'bash', eval = FALSE}
 grep -v '^>' fastafile >newfile
 ```
+If you want to do the opposite, meaning that you want to transform the text file in a fasta format, you can use the follwoing code:
+```{r, engine = 'bash', eval = FALSE}
+awk '{ printf ">%s\n%s\n",$1,$2 }' 277sequences.txt > outputfile.txt 
+```
 
 From this new file you can now use a script `line.extract.py` (that you can find in (Eric Normandeau github page)[https://github.com/enormandeau/Scripts] to obtain a sequence for each outlier SNP.
 
